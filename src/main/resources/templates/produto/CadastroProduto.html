@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+	
+<head>
+	<title>Semeia Fruta</title>
+	<link  rel="stylesheet" th:href="@{/layout/stylesheets/upload.min.css}"/>
+	
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>
+				Cadastro de produto
+			</h1>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+	
+<!-- 		<div class="alert  alert-danger  alert-dismissible" role="alert"> -->
+<!-- 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+<!-- 			<i class="fa  fa-exclamation-circle"></i> Já existe um produto com o nome informado. -->
+<!-- 		</div> -->
+	
+		<form method="POST" th:object="${produto}" class="form-vertical  js-form-loading"
+		th:action="${produto.novo} ? @{/produtos/novo} : @{/produtos/{codigo}(codigo=${produto.codigo})}">
+			
+			<input type="hidden" th:field="*{codigo}"/>
+			
+			<div class="form-group">
+				<label for="input-produto-nome">Nome</label>
+				<input id="input-produto-nome" th:field="*{nome}" type="text" class="form-control"/>
+			</div>
+	
+			<div class="form-group">
+				<label for="input-produto-descricao">Descrição</label>
+				<textarea id="input-produto-descricao" th:field="*{descricao}" rows="3" class="form-control"></textarea>
+			</div>
+	
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="input-produto-preco">Preço unitário</label>
+						<input id="input-produto-preco" th:field="*{preco}" type="text" class="form-control" placeholder="R$"/>
+					</div>
+				</div>
+				
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="input-produto-estoque">Estoque</label>
+						<input id="input-produto-estoque" th:field="*{quantidadeEstoque}" type="text" class="form-control" placeholder="Unidades"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group  col-sm-12">
+					<input type="hidden" th:field="*{foto}"/>
+					<input type="hidden" th:field="*{contentType}"/>
+					<input type="hidden" th:field="*{novaFoto}"/>
+					<input type="hidden" th:field="*{urlFoto}"/>
+				
+					<label class="control-label">Foto</label>
+					
+					<div class="js-container-foto-produto" th:attr="data-url-fotos=@{/fotos}">
+						<div id="upload-drop" class="bw-upload">
+							<img th:src="@{/layout/images/mini-loading.gif}" class="js-img-loading  hidden"/>
+							<i class="glyphicon  glyphicon-cloud-upload"></i>
+							<span>Arraste a foto aqui ou </span>
+							<a class="bw-upload-form-file">selecione <input id="upload-select" type="file" accept=".jpg,.jpeg,.png"/></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<button class="btn  btn-primary" type="submit">Salvar</button>
+				<a href="#" class="btn  btn-default">Cancelar</a>
+<!-- 				<a href="#" class="btn  btn-link  aw-btn-link-danger">Excluir este produto</a> -->
+			</div>
+	
+		</form>
+	</div>
+<th:block th:replace="/hbs/FotoProduto"></th:block>
+</section>
+<!-- FRAGMENTO QUE SERA INCLUIDO NO LAYOUT PADRAO -->
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/layout/javascripts/uikit.min.js}"></script>
+	<script th:src="@{/layout/javascripts/upload.min.js}"></script>
+	<script th:src="@{/layout/javascripts/handlebars.min.js}"></script>
+	<script th:src="@{/layout/javascripts/produto.upload-foto.js}"></script>
+	
+</th:block>
+</body>
+</html>

@@ -1,0 +1,19 @@
+.uk-text-center {
+    text-align: center !important;
+}
+.uk-placeholder {
+    margin-bottom: 20px;
+    padding: 30px 30px;
+    background: transparent;
+    border: 1px dashed #e5e5e5;
+}
+
+.uk-text-middle {
+    vertical-align: middle !important;
+}
+
+a, .uk-link {
+    color: #1e87f0;
+    text-decoration: none;
+    cursor: pointer;
+}
