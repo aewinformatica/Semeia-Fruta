@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aewinformatica.projeto.model.Produtor;
+import com.aewinformatica.projeto.model.Usuario;
 import com.aewinformatica.projeto.repository.Grupos;
-import com.aewinformatica.projeto.service.CadastroProdutorService;
+import com.aewinformatica.projeto.service.CadastroUsuarioService;
 import com.aewinformatica.projeto.service.exception.EmailUsuarioJaCadastradoException;
 import com.aewinformatica.projeto.service.exception.SenhaObrigatoriaUsuarioException;
 
@@ -22,37 +22,38 @@ import com.aewinformatica.projeto.service.exception.SenhaObrigatoriaUsuarioExcep
 @RequestMapping("/produtores")
 public class ProdutoresController {
 
+
+	
 	@Autowired
-	private CadastroProdutorService cadastroProdutorService;
+	private CadastroUsuarioService cadastroUsuarioService;
 	
 	@Autowired
 	private Grupos grupos;
 	
 	@RequestMapping("/novo")
-	public ModelAndView novo(Produtor produtor) {
+	public ModelAndView novo(Usuario usuario) {
 		ModelAndView mv = new ModelAndView("/produtor/CadastraProdutor");
-		mv.addObject("grupos", grupos.findAll());
+		mv.addObject("grupos", grupos.findOne(2L));
 		return mv;
 	}
-	
-	
+
 	@PostMapping({ "/novo", "{\\+d}" })
-	public ModelAndView salvar(@Valid Produtor produtor, BindingResult result, RedirectAttributes attributes) {
+	public ModelAndView salvar(@Valid Usuario usuario, BindingResult result, RedirectAttributes attributes) {
 		if (result.hasErrors()) {
-			return novo(produtor);
+			return novo(usuario);
 		}
 		
 		try {
-			cadastroProdutorService.salvar(produtor);
+			cadastroUsuarioService.salvar(usuario);
 		} catch (EmailUsuarioJaCadastradoException e) {
 			result.rejectValue("email", e.getMessage(), e.getMessage());
-			return novo(produtor);
+			return novo(usuario);
 		} catch (SenhaObrigatoriaUsuarioException e) {
 			result.rejectValue("senha", e.getMessage(), e.getMessage());
-			return novo(produtor);
+			return novo(usuario);
 		}
 		
-		attributes.addFlashAttribute("mensagem", "Usuário salvo com sucesso");
-		return new ModelAndView("redirect:/produtor/novo");
+		attributes.addFlashAttribute("mensagem", "Você se cadastrou com sucesso");
+		return new ModelAndView("redirect:/login");
 	}
 }

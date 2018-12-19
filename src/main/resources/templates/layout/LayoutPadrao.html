@@ -40,14 +40,14 @@
 	      <a class="navbar-brand  hidden-xs" href="#">
 	        <img alt="AlgaWorks" th:src="@{/layout/images/logo.png}"/>
 	      </a>
-
-	      <ul class="nav  navbar-nav">
+          
+	      <ul sec:authorize="isAuthenticated()" class="nav  navbar-nav">
 	        <li>
 	          <a href="#" class="js-sidebar-toggle"><i class="fa  fa-bars"></i></a>
 	        </li>
 	      </ul>
 	    </div>
-
+<div sec:authorize="isAuthenticated()">
 	    <ul class="nav navbar-nav  navbar-right">
 	    
 	      <li>
@@ -106,10 +106,11 @@
 	        <a th:href="@{/logout}"><em class="fa  fa-sign-out"></em></a>
 	      </li> 
 	    </ul>
+	    </div>
 
 	  </div>
 	</nav>
-	
+	<div sec:authorize="isAuthenticated()">
 	<aside class="aw-layout-sidebar  js-sidebar">
 		<div class="aw-layout-sidebar__content">
 	
@@ -187,7 +188,7 @@
 	    	</nav>
 		</div>
 	</aside>
-	
+	</div>
 	<section class="aw-layout-content  js-content" layout:fragment="conteudo"></section>
 	
 	<footer class="aw-layout-footer  js-content">

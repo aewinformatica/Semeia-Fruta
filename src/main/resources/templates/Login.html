@@ -26,8 +26,10 @@
 <form th:action="@{/login}" method="POST">
 	<div class="aw-simple-panel">
 		<img alt="AewInformatica" th:src="@{/layout/images/logo-semeia.png}"/>
-		
+        
+
 		<div class="aw-simple-panel__message">
+		<span  th:text="${mensagem}">Produtor salvo com sucesso!!!</span>
 			Por favor, faça o login.
 		</div>
 		
@@ -36,6 +38,7 @@
 		</div>
 		
 		<div class="aw-simple-panel__box">
+				
 			<div class="form-group  has-feedback">
 				<input type="text" class="form-control  input-lg" placeholder="Seu e-mail" autofocus="autofocus" name="username"/>
 				<span class="glyphicon  glyphicon-envelope  form-control-feedback"></span>
@@ -49,7 +52,7 @@
 				<button type="submit" class="btn  btn-primary  btn-lg  aw-btn-full-width">Entrar</button>
 			</div>
 			<div class="form-group">
-				<a href="produtor/novo">Não é cadastrado? Clique aqui e faça parte deste movimento!</a>
+				<a href="produtores/novo">Não é cadastrado? Clique aqui e faça parte deste movimento!</a>
 			</div>
 			
 		</div>
