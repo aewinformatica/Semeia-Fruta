@@ -4,14 +4,20 @@ import static java.nio.file.FileSystems.getDefault;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.annotation.PostConstruct;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.name.Rename;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,18 +31,27 @@ public class FotoStorageLocal implements FotoStorage {
 	private static final Logger logger = LoggerFactory.getLogger(FotoStorageLocal.class);
 	private static final String THUMBNAIL_PREFIX = "thumbnail.";
 	
+	
+	@Value("${sistema.foto-storage-local.local}")
 	private Path local;
 	
-	public FotoStorageLocal() {
-		this(getDefault().getPath(System.getenv("HOME"), ".sitefotos")); //so no MAC
-//        this(getDefault().getPath(System.getProperty("user.home"), ".sitefotos"));
-	}
+	private Path mockPath = Paths.get(System.getProperty("user.dir")+ "\\src\\main\\resources\\static\\layout\\images");
 	
-	public FotoStorageLocal(Path path) {
-		this.local = path;
-		criarPastas();
-	}
+//	public FotoStorageLocal() {
+//		this(getDefault().getPath(System.getenv("HOME"), ".sitefotos")); //so no MAC
+//        this(getDefault().getPath(System.getProperty("user.home"), ".sitefotos"));
+//	}
+	
+//	public FotoStorageLocal(Path path) {
+//		this.local = path;
+//		criarPastas();
+//	}
 
+	private String urlBase;
+	
+	@Value("${server.port}")
+	private String port;
+	
 	@Override
 	public String salvar(MultipartFile[] files) {
 		String novoNome = null;
@@ -86,12 +101,41 @@ public class FotoStorageLocal implements FotoStorage {
 	
 	@Override
 	public String getUrl(String foto) {
-		return "http://localhost:8080/fotos/" + foto;
+//		return "http://localhost:8080/fotos/" + foto;
+		try {
+
+			urlBase  = "http://" + InetAddress.getLocalHost().getHostAddress() +":"+ port+"/fotos/";
+			System.out.println(urlBase.toString());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return urlBase + foto;
 	}
 	
+	@PostConstruct
 	private void criarPastas() {
-		try {
-			Files.createDirectories(this.local);
+		String mockNome = "produto-mock.png";
+		
+		try {			
+			
+			
+			if(!Files.exists(this.local)) {
+			
+				Files.createDirectories(this.local);
+				Files.copy(this.mockPath.resolve(mockNome),this.local.resolve(mockNome));
+			
+			try {
+				Thumbnails.of(this.local.resolve(mockNome).toString()).size(40, 68).toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+			} catch (IOException e) {
+				throw new RuntimeException("Erro gerando thumbnail", e);
+			}
+			
+			}
+			
+
+			 
 			
 			if (logger.isDebugEnabled()) {
 				logger.debug("Pastas criadas para salvar fotos.");

@@ -32,10 +32,10 @@
 	</div>
 
 	<div class="container-fluid">
-		<div class="alert  alert-success  alert-dismissible" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<i class="fa  fa-check"></i> Os 8 produtos selecionados foram excluídos com sucesso!
-		</div>
+<!-- 		<div class="alert  alert-success  alert-dismissible" role="alert"> -->
+<!-- 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+<!-- 			<i class="fa  fa-check"></i> Os 8 produtos selecionados foram excluídos com sucesso! -->
+<!-- 		</div> -->
 
 		<form method="GET" th:object="${produtoFilter}" class="form-vertical  js-form-loading">
 			<div class="form-group">
@@ -137,7 +137,7 @@
 						<td class="aw-table-checkbox"><input type="checkbox"/></td>
 						<td class="text-center">
 							<img th:src="@{/fotos/thumbnail.{foto}(foto=${produto.fotoOuMock})}" class="img-responsive"/>
-<!-- 						<img th:src="${produto.urlThumbnailFoto}" class="img-responsive"/> -->
+<!-- 							<img th:src="${produto.urlThumbnailFoto}" class="img-responsive"/> -->
 						</td>
 						<td th:text="${produto.nome}"><a href="#">Blue Microphones Yeti Pro Usb  XLR - Microfone Condensador</a> <span class="label  label-danger">Sem estoque</span></td>
 						<td th:text="${produto.preco}" class="table-pesq-produto-col-preco">R$1.699,00</td>

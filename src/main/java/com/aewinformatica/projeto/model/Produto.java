@@ -92,7 +92,7 @@ public class Produto {
 	}
 
 	public String getFotoOuMock() {
-		return !StringUtils.isEmpty(foto) ? foto : "semimagem-mock.png";
+		return !StringUtils.isEmpty(foto) ? foto : "produto-mock.png";
 	}
 
 	public boolean temFoto() {
