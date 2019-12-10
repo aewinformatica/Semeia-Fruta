@@ -1,6 +1,5 @@
 package com.aewinformatica.projeto.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.aewinformatica.projeto.model.Grupo;
 import com.aewinformatica.projeto.model.Produtor;
-import com.aewinformatica.projeto.repository.Grupos;
 import com.aewinformatica.projeto.repository.Produtores;
 import com.aewinformatica.projeto.service.exception.EmailUsuarioJaCadastradoException;
 import com.aewinformatica.projeto.service.exception.SenhaObrigatoriaUsuarioException;
