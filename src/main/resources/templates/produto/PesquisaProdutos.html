@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/LayoutPadrao">
+	layout:decorate="layout/LayoutPadrao"
+	>
 	
 <head>
 	<title>Semeia Fruta</title>
@@ -79,7 +81,7 @@
 	
 		<div class="row  aw-datatable-toolbar">
 			<div class="col-xs-8">
-				<button class="btn btn-default  btn-sm">
+				<button class="btn btn-default  btn-sm js-excluir-em-massa-btn" data:url="@{/produtos/remover}">
 					<i class="fa fa-trash"></i> <span class="visible-md-inline  visible-lg-inline">Excluir</span>
 				</button>
 	
@@ -122,7 +124,7 @@
 				<thead class="aw-table-header-solid">
 					<tr>
 						<th class="aw-table-checkbox">
-							<input type="checkbox"/>
+							<input type="checkbox" class="js-selecao-todos"/>
 						</th>
 						<th>Foto</th>
 						<th>Nome</th>
@@ -134,7 +136,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="produto : ${pagina.conteudo}">
-						<td class="aw-table-checkbox"><input type="checkbox"/></td>
+						<td class="aw-table-checkbox"><input type="checkbox" class="js-selecao" data:codigo=${produto.codigo}></td>
 						<td class="text-center">
 							<img th:src="@{/fotos/thumbnail.{foto}(foto=${produto.fotoOuMock})}" class="img-responsive"/>
 <!-- 							<img th:src="${produto.urlThumbnailFoto}" class="img-responsive"/> -->
@@ -185,5 +187,8 @@
 	</div>
 
 </section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/layout/javascripts/produto-multiexclusao.js}"></script>
+</th:block>
 </body>
 </html>
